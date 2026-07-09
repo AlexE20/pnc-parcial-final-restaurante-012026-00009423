@@ -1,0 +1,41 @@
+services:
+  # Servicio de la Base de Datos
+  db:
+    image: postgres:17
+    container_name: restaurante_db
+    ports:
+      - "5433:5432" # 5433 en tu máquina, 5432 dentro del contenedor
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d ${DB_NAME}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - restaurante-network
+
+  # Servicio de tu Aplicación Spring Boot
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: restaurante_app
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - restaurante-network
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+
+networks:
+  restaurante-network:
+    name: restaurante-network

@@ -1,18 +1,18 @@
 spring:
   application:
     name: pnc-parcial-final-restaurante
-    datasource:
-      url: ${DB_URL}
-      username: ${DB_USER}
-      password: ${DB_PASS}
-      driver-class-name: org.postgresql.Driver
-    jpa:
-      show-sql: true
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5433/restaurante_db}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASS:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
       hibernate:
-        ddl-auto: none
-      properties:
-        hibernate:
-          dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 application:
   security:
     jwt:
