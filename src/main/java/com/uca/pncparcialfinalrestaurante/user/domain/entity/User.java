@@ -1,6 +1,7 @@
 package com.uca.pncparcialfinalrestaurante.user.domain.entity;
 
 import com.uca.pncparcialfinalrestaurante.role.entity.Role;
+import com.uca.pncparcialfinalrestaurante.restaurant.domain.entity.Restaurant;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +28,10 @@ public class User implements UserDetails {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "restaurant_id", nullable = true)
+    private Restaurant restaurant;
 
     @Column(name = "username", nullable = false, unique = true)
     private String username;
