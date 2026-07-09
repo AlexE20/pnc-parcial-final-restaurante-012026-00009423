@@ -1,3 +1,22 @@
 spring:
   application:
     name: pnc-parcial-final-restaurante
+    datasource:
+      url: ${DB_URL}
+      username: ${DB_USER}
+      password: ${DB_PASS}
+      driver-class-name: org.postgresql.Driver
+    jpa:
+      show-sql: true
+      hibernate:
+        ddl-auto: none
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+application:
+  security:
+    jwt:
+      secret-key: ${JWT_SECRET_KEY:3cfa76f1406326e382d6b38c2817d23d8c115e4a833d712f5a02102008fb9ca1}
+      expiration: 900000
+      refresh-token:
+        expiration: 604800000
